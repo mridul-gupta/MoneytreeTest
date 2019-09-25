@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Moneytree Light</string>
+    <string name="transactions_file_name">transactions_%1$d.json</string>
+</resources>
