@@ -1,4 +1,4 @@
-package com.moneytree.light.pojo
+package com.moneytree.light.data
 
 data class ApiResponse<T>(
     var statusCode: Int,

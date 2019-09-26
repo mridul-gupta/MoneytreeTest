@@ -1,4 +1,4 @@
-package com.moneytree.light.ui.main
+package com.moneytree.light.ui.accountlist
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.moneytree.light.R
-import com.moneytree.light.pojo.Account
+import com.moneytree.light.data.Account
 import kotlinx.android.synthetic.main.account_row.view.*
 import kotlinx.android.synthetic.main.institution_card.view.*
 

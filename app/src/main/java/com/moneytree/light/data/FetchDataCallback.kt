@@ -1,4 +1,4 @@
-package com.moneytree.light.pojo
+package com.moneytree.light.data
 
 interface FetchDataCallback<V> {
     fun onFailure()

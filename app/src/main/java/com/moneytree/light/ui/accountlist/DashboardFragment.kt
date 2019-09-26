@@ -1,4 +1,4 @@
-package com.moneytree.light.ui.main
+package com.moneytree.light.ui.accountlist
 
 import android.content.Context
 import android.os.Bundle
@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.moneytree.light.R
 import com.moneytree.light.Status
-import com.moneytree.light.viewmodel.DashboardViewModel
 import kotlinx.android.synthetic.main.dashboard_fragment.*
 
 class DashboardFragment : Fragment() {

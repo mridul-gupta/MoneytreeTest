@@ -1,11 +1,11 @@
-package com.moneytree.light.viewmodel
+package com.moneytree.light.ui.accountlist
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.moneytree.light.Status
-import com.moneytree.light.pojo.*
+import com.moneytree.light.data.*
 import kotlinx.coroutines.launch
 
 class DashboardViewModel : ViewModel() {

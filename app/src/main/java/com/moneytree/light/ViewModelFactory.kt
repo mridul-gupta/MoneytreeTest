@@ -1,8 +1,9 @@
-package com.moneytree.light.viewmodel
+package com.moneytree.light
 
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.moneytree.light.ui.accountlist.DashboardViewModel
 
 class ViewModelFactory private constructor() : ViewModelProvider.Factory {
 

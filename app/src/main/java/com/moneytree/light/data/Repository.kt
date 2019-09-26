@@ -1,4 +1,4 @@
-package com.moneytree.light.pojo
+package com.moneytree.light.data
 
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
