@@ -1,8 +1,12 @@
 package com.moneytree.light
 
 
-val ACCOUNTS_FILE_NAME: String = "accounts.json"
-val TRANSACTIONS_BASE_FILE_NAME: String = "transactions_"
+const val ACCOUNTS_FILE_NAME: String = "accounts.json"
+
+const val ACCOUNT_DASHBOARD_SCREEN = 10001
+const val ACCOUNT_TRANSACTIONS_SCREEN = 10002
+
+
 
 enum class Status {
     IDLE,
