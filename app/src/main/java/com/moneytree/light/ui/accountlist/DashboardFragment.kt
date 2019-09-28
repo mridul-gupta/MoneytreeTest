@@ -60,10 +60,9 @@ class DashboardFragment : Fragment() {
             this,
             Observer { consumeResponse(mViewModel.responseStatus.value) })
 
-        mViewModel.openAccountDetailEvent.observe(this, Observer { id ->
+        mViewModel.openAccountDetailEvent.observe(this, Observer { account ->
             val bundle = Bundle()
-            bundle.putInt("ACCOUNT_ID", id)
-            bundle.putString("ACCOUNT_NAME", mViewModel.accounts.find { it.id == id }!!.institution)
+            bundle.putParcelable("ACCOUNT", account)
             (activity as AccountsActivity).loadFragment(ACCOUNT_TRANSACTIONS_SCREEN, bundle)
         })
     }
@@ -88,13 +87,13 @@ class DashboardFragment : Fragment() {
         for (i in mViewModel.accounts.indices) {
             total += mViewModel.accounts[i].current_balance_in_base
         }
-        tv_total_value.text = String.format(
+        tv_account_balance.text = String.format(
             requireActivity().resources.getString(R.string.currency_balance),
-            "JPY", total
+            getString(R.string.default_currency), total
         )
 
         /* update recycler view */
-        dashboardAdapter.updateData(mViewModel.accountsByInstitution)
+        dashboardAdapter.refresh(mViewModel.accountsByInstitution)
     }
 
 

@@ -34,6 +34,70 @@
     },
     {
       "account_id": 2,
+      "amount": 500.0,
+      "category_id": 111,
+      "date": "2017-03-01T00:00:00+09:00",
+      "description": "\u30b9\u30bf\u30fc\u30d0\u30c3\u30af\u30b9 \u539f\u5bbf\u5e97",
+      "id": 24
+    },
+    {
+      "account_id": 2,
+      "amount": 500.0,
+      "category_id": 111,
+      "date": "2017-03-01T00:00:00+09:00",
+      "description": "\u30b9\u30bf\u30fc\u30d0\u30c3\u30af\u30b9 \u539f\u5bbf\u5e97",
+      "id": 24
+    },
+    {
+      "account_id": 2,
+      "amount": 500.0,
+      "category_id": 111,
+      "date": "2017-02-01T00:00:00+09:00",
+      "description": "\u30b9\u30bf\u30fc\u30d0\u30c3\u30af\u30b9 \u539f\u5bbf\u5e97",
+      "id": 24
+    },
+    {
+      "account_id": 2,
+      "amount": 500.0,
+      "category_id": 111,
+      "date": "2017-02-01T00:00:00+09:00",
+      "description": "\u30b9\u30bf\u30fc\u30d0\u30c3\u30af\u30b9 \u539f\u5bbf\u5e97",
+      "id": 24
+    },
+    {
+      "account_id": 2,
+      "amount": 500.0,
+      "category_id": 192,
+      "date": "2017-02-01T00:00:00+09:00",
+      "description": "\u30b9\u30bf\u30fc\u30d0\u30c3\u30af\u30b9 \u539f\u5bbf\u5e97",
+      "id": 24
+    },
+    {
+      "account_id": 2,
+      "amount": 500.0,
+      "category_id": 111,
+      "date": "2017-01-01T00:00:00+09:00",
+      "description": "\u30b9\u30bf\u30fc\u30d0\u30c3\u30af\u30b9 \u539f\u5bbf\u5e97",
+      "id": 24
+    },
+    {
+      "account_id": 2,
+      "amount": 500.0,
+      "category_id": 111,
+      "date": "2017-01-01T00:00:00+09:00",
+      "description": "\u30b9\u30bf\u30fc\u30d0\u30c3\u30af\u30b9 \u539f\u5bbf\u5e97",
+      "id": 24
+    },
+    {
+      "account_id": 2,
+      "amount": 500.0,
+      "category_id": 192,
+      "date": "2017-01-01T00:00:00+09:00",
+      "description": "\u30b9\u30bf\u30fc\u30d0\u30c3\u30af\u30b9 \u539f\u5bbf\u5e97",
+      "id": 24
+    },
+    {
+      "account_id": 2,
       "amount": -1047.0,
       "category_id": 112,
       "date": "2017-04-19T00:00:00+09:00",

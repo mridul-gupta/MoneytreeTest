@@ -22,7 +22,7 @@ class DashboardAdapter(
         return InstitutionViewHolder(view, context, dashboardViewModel)
     }
 
-    fun updateData(newData: List<Pair<String, List<Account>>>) {
+    fun refresh(newData: List<Pair<String, List<Account>>>) {
         accountsByInstitution = newData
         notifyDataSetChanged()
     }
@@ -60,7 +60,7 @@ class DashboardAdapter(
                         item.second[i].currency, item.second[i].current_balance
                     )
 
-                    newEntry.setOnClickListener { dashboardViewModel.openAccountDetail(item.second[i].id) }
+                    newEntry.setOnClickListener { dashboardViewModel.openAccountDetail(item.second[i]) }
 
                     view.ll_list.addView(newEntry)
 

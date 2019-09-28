@@ -1,6 +1,5 @@
 package com.moneytree.light.ui.transactions
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,6 +11,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.moneytree.light.ACCOUNT_DASHBOARD_SCREEN
 import com.moneytree.light.R
@@ -25,8 +25,6 @@ class TransactionsFragment : Fragment() {
     private lateinit var mViewModel: TransactionsViewModel
     private lateinit var transactionsRecyclerView: RecyclerView
     private lateinit var transactionsAdapter: TransactionsAdapter
-    private var selectedAccountId : Int = 0
-    private lateinit var selectedAccountName : String
 
 
     companion object {
@@ -47,7 +45,17 @@ class TransactionsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.transactions_fragment, container, false)
+        val view =  inflater.inflate(R.layout.transactions_fragment, container, false)
+        mViewModel = ViewModelProviders.of(this).get(TransactionsViewModel::class.java)
+
+        mViewModel.selectedAccount = arguments?.getParcelable("ACCOUNT")!!
+        mViewModel.getAccountData(mViewModel.selectedAccount.id)
+
+        mViewModel.responseStatus.observe(
+            this,
+            Observer { consumeResponse(mViewModel.responseStatus.value) })
+
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -55,22 +63,24 @@ class TransactionsFragment : Fragment() {
         setupToolbar()
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        val arguments = arguments
-        selectedAccountId = arguments!!.getInt("ACCOUNT_ID")
-        selectedAccountName = arguments.getString("ACCOUNT_NAME") ?: "Account Name"
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        transactionsRecyclerView = rv_transactions
+        transactionsAdapter = TransactionsAdapter(requireActivity(), mViewModel.getCombinedDataForAdaptor(), mViewModel)
 
-        mViewModel = ViewModelProviders.of(this).get(TransactionsViewModel::class.java)
-        mViewModel.getAccountData(selectedAccountId)
-
-
-        mViewModel.responseStatus.observe(
-            this,
-            Observer { consumeResponse(mViewModel.responseStatus.value) })
+        transactionsRecyclerView.layoutManager =
+            LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+        transactionsRecyclerView.adapter = transactionsAdapter
     }
 
     private fun updateUI() {
+        tv_account_name.text = mViewModel.selectedAccount.name
+
+        tv_account_balance.text = String.format(
+            requireActivity().resources.getString(R.string.currency_balance),
+            mViewModel.selectedAccount.currency, mViewModel.selectedAccount.current_balance
+        )
+        transactionsAdapter.refresh()
     }
 
     private fun setupToolbar() {
@@ -79,7 +89,7 @@ class TransactionsFragment : Fragment() {
         tbToolbar.setNavigationOnClickListener { onBackPressed() }
         tbToolbar.iv_add_account.visibility = View.GONE
         tbToolbar.iv_profile.visibility = View.GONE
-        tbToolbar.toolbar_name.text = selectedAccountName
+        tbToolbar.toolbar_name.text = mViewModel.selectedAccount.institution
     }
 
     private fun consumeResponse(status: Status?) {

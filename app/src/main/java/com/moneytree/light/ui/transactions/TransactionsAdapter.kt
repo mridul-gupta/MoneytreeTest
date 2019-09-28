@@ -6,65 +6,113 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.moneytree.light.R
-import com.moneytree.light.data.Account
-import kotlinx.android.synthetic.main.account_row.view.*
-import kotlinx.android.synthetic.main.institution_card.view.*
+import com.moneytree.light.data.Transaction
+import kotlinx.android.synthetic.main.transaction_row.view.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 class TransactionsAdapter(
     var context: Context,
-    private var accountsByInstitution: List<Pair<String, List<Account>>>
-) : RecyclerView.Adapter<TransactionsAdapter.InstitutionViewHolder>() {
+    private val combinedList: MutableList<Comparable<*>>,
+    private var mViewModel: TransactionsViewModel
+) : RecyclerView.Adapter<TransactionsAdapter.BaseViewHolder<*>>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): InstitutionViewHolder {
-        context = parent.context
-        val view = LayoutInflater.from(context).inflate(R.layout.institution_card, parent, false)
-        return InstitutionViewHolder(view, context)
+    companion object {
+        const val TYPE_HEADER = 1001
+        const val TYPE_TRANSACTION = 1002
     }
 
-    fun updateData(newData: List<Pair<String, List<Account>>>) {
-        accountsByInstitution = newData
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<*> {
+        context = parent.context
+
+
+        return when (viewType) {
+            TYPE_HEADER -> {
+                val view =
+                    LayoutInflater.from(context).inflate(R.layout.transaction_header, parent, false)
+                HeaderViewHolder(view, context)
+            }
+            TYPE_TRANSACTION -> {
+                val view =
+                    LayoutInflater.from(context).inflate(R.layout.transaction_row, parent, false)
+                TransactionViewHolder(view, context, mViewModel)
+            }
+            else -> throw IllegalArgumentException("Invalid view type")
+        }
+    }
+
+    fun refresh() {
+        combinedList.clear()
+        combinedList.addAll(mViewModel.getCombinedDataForAdaptor())
         notifyDataSetChanged()
     }
 
     override fun getItemCount(): Int {
-        return accountsByInstitution.size
+        return combinedList.size
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return when (combinedList[position]) {
+            is String -> TYPE_HEADER
+            is Transaction -> TYPE_TRANSACTION
+            else -> throw IllegalArgumentException()
+        }
+    }
+
+    override fun onBindViewHolder(holder: BaseViewHolder<*>, position: Int) {
+        val element = combinedList[position]
+        when (holder) {
+            is HeaderViewHolder -> holder.bind(element as String)
+            is TransactionViewHolder -> holder.bind(element as Transaction)
+            else -> throw IllegalArgumentException()
+        }
     }
 
 
-    override fun onBindViewHolder(holder: InstitutionViewHolder, position: Int) {
-        holder.bind(accountsByInstitution[position])
+    /**
+     * View holders
+     */
+    abstract class BaseViewHolder<T>(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        abstract fun bind(item: T)
     }
 
-    class InstitutionViewHolder(private val view: View, private val context: Context) :
-        RecyclerView.ViewHolder(view) {
+    class HeaderViewHolder(private val view: View, private val context: Context) :
+        BaseViewHolder<String>(view) {
 
-        fun bind(item: Pair<String, List<Account>>) {
-            view.tv_institution_name.text = item.first
-            view.ll_list.removeAllViews()
+        override fun bind(item: String) {
+            view.tv_month_title.text = item
+        }
+    }
 
-            if (item.second.isNotEmpty()) {
-                for (i in 0 until item.second.size) {
-                    val newEntry =
-                        LayoutInflater.from(context)
-                            .inflate(R.layout.account_row, view.ll_list, false)
+    class TransactionViewHolder(
+        private val view: View,
+        private val context: Context,
+        private val viewModel: TransactionsViewModel
+    ) :
+        BaseViewHolder<Transaction>(view) {
 
-                    /* update fields */
-                    newEntry.tv_account_name.text = item.second[i].name
-                    newEntry.tv_account_balance.text = String.format(
-                        context.resources.getString(R.string.currency_balance),
-                        item.second[i].currency, item.second[i].current_balance
-                    )
+        override fun bind(item: Transaction) {
 
-                    view.ll_list.addView(newEntry)
+            val calendar = Calendar.getInstance()
+            val sdf =
+                SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX", Locale.getDefault())
+            calendar.time = sdf.parse(item.date)!!
 
-                    /* add separator */
-                    if (i < item.second.size - 1) {
-                        view.ll_list.addView(
-                            LayoutInflater.from(context)
-                                .inflate(R.layout.horizontal_separator, view.ll_list, false)
-                        )
-                    }
-                }
+            view.tv_month_title.text = String.format("%02d", calendar.get(Calendar.DAY_OF_MONTH))
+            view.iv_category.setImageResource(getCategoryResource(item.category_id))
+            view.tv_transaction_info.text = item.description
+            view.tv_transaction_value.text = String.format(
+                context.resources.getString(R.string.currency_balance),
+                viewModel.selectedAccount.currency, item.amount
+            )
+        }
+
+        private fun getCategoryResource(category: Int): Int {
+            return when (category) {
+                111 -> R.drawable.ic_coffee
+                112 -> R.drawable.ic_restaurant
+                192 -> R.drawable.ic_groceries
+                else -> R.drawable.ic_groceries /* default to grocery */
             }
         }
     }

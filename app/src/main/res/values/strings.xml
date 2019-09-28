@@ -3,4 +3,5 @@
     <string name="transactions_file_name">transactions_%1$d.json</string>
     <string name="currency_balance">%1$s %2$,.1f</string>
     <string name="user_profile_button">User Profile button</string>
+    <string name="default_currency">JPY</string>
 </resources>

@@ -20,8 +20,8 @@ class DashboardViewModel : ViewModel() {
 
     val responseStatus = MutableLiveData(Status.IDLE)
 
-    private val _openAccountDetailEvent = MutableLiveData<Int>()
-    val openAccountDetailEvent: LiveData<Int> = _openAccountDetailEvent
+    private val _openAccountDetailEvent = MutableLiveData<Account>()
+    val openAccountDetailEvent: LiveData<Account> = _openAccountDetailEvent
 
     private var mRepository: Repository = Repository()
 
@@ -56,7 +56,7 @@ class DashboardViewModel : ViewModel() {
         }
     }
 
-    internal fun openAccountDetail(id: Int) {
-        _openAccountDetailEvent.value = id
+    internal fun openAccountDetail(account: Account) {
+        _openAccountDetailEvent.value = account
     }
 }

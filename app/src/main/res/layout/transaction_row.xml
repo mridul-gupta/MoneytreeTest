@@ -5,19 +5,22 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
-    android:padding="16dp">
+    android:paddingTop="16dp"
+    android:paddingBottom="4dp"
+    android:paddingStart="24dp"
+    android:paddingEnd="16dp" >
 
     <TextView
-        android:id="@+id/tv_day_of_month"
+        android:id="@+id/tv_month_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:singleLine="true"
-        android:textSize="32sp"
+        android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent=".1"
+        app:layout_constraintWidth_percent=".15"
         tools:text="21" />
 
     <ImageView
@@ -26,39 +29,36 @@
         android:layout_height="24dp"
         android:src="@drawable/ic_profile"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/tv_account_name"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintWidth_percent=".1"
-        app:layout_constraintStart_toEndOf="@+id/tv_day_of_month"
+        app:layout_constraintEnd_toStartOf="@+id/tv_transaction_info"
+        app:layout_constraintWidth_percent=".15"
+        app:layout_constraintStart_toEndOf="@+id/tv_month_title"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tv_account_name"
+        android:id="@+id/tv_transaction_info"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:singleLine="true"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/tv_account_balance"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintEnd_toStartOf="@+id/tv_transaction_value"
         app:layout_constraintWidth_percent=".4"
         app:layout_constraintStart_toEndOf="@+id/iv_category"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Bank Name" />
+        tools:text="Transaction" />
 
     <TextView
-        android:id="@+id/tv_account_balance"
+        android:id="@+id/tv_transaction_value"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:foregroundGravity="right"
         android:gravity="end"
         android:singleLine="true"
+        android:textColor="@color/blue"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintWidth_percent=".3"
-        app:layout_constraintStart_toEndOf="@+id/tv_account_name"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent=".3"
         tools:text="JPY 22,324.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
