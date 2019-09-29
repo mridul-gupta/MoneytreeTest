@@ -44,9 +44,7 @@ class DefaultRepository(
 
 
             (newAccounts as? Result.Success)?.let {
-                if (it.data.accounts.isNotEmpty()) {
-                    return@withContext Result.Success(it.data)
-                }
+                return@withContext Result.Success(it.data)
             }
             return@withContext Result.Error(Exception("Illegal state"))
         }
@@ -104,9 +102,7 @@ class DefaultRepository(
 
 
             (newTransactions as? Result.Success)?.let {
-                if (it.data.transactions.isNotEmpty()) {
-                    return@withContext Result.Success(it.data)
-                }
+                return@withContext Result.Success(it.data)
             }
             return@withContext Result.Error(Exception("Illegal state"))
         }

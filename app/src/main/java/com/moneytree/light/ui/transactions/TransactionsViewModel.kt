@@ -16,8 +16,8 @@ class TransactionsViewModel(
 ) : ViewModel() {
     private val TAG = TransactionsViewModel::class.java.simpleName
 
-    var transactionByMonth: Map<String, List<Transaction>> = mapOf()
-    var transaction: List<Transaction> = listOf()
+    var transactionListByMonth: Map<String, List<Transaction>> = mapOf()
+    var transactionList: List<Transaction> = listOf()
     var selectedAccount: Account = Account(0, "", "", "", 0f, 0f)
 
     val responseStatus = MutableLiveData(Status.IDLE)
@@ -25,7 +25,7 @@ class TransactionsViewModel(
     fun getCombinedDataForAdaptor(): MutableList<Comparable<*>> {
         val combineList: MutableList<Comparable<*>> = ArrayList()
 
-        for ((title, tList) in transactionByMonth) {
+        for ((title, tList) in transactionListByMonth) {
             println("$title = $tList")
 
             combineList.add(title)
@@ -45,9 +45,9 @@ class TransactionsViewModel(
                 Log.d(TAG, result.data.toString())
 
                 /* save as list */
-                transaction = result.data.transactions
+                transactionList = result.data.transactions
                 /* sort by name, group by institution name */
-                transactionByMonth =
+                transactionListByMonth =
                     result.data.transactions.sortedByDescending { transaction ->
                         val sdf =
                             SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX", Locale.getDefault())
@@ -71,8 +71,8 @@ class TransactionsViewModel(
                 responseStatus.postValue(Status.SUCCESS)
             } else {
                 responseStatus.postValue(Status.ERROR)
-                transaction = emptyList()
-                transactionByMonth = emptyMap()
+                transactionList = emptyList()
+                transactionListByMonth = emptyMap()
             }
         }
     }

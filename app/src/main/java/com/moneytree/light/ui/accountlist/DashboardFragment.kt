@@ -92,6 +92,11 @@ class DashboardFragment : Fragment() {
             getString(R.string.default_currency), total
         )
 
+        if (mViewModel.accounts.isEmpty())
+            tv_no_accounts.visibility = View.VISIBLE
+        else
+            tv_no_accounts.visibility = View.GONE
+
         /* update recycler view */
         dashboardAdapter.refresh(mViewModel.accountsByInstitution)
     }

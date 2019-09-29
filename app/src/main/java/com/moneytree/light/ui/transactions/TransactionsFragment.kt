@@ -80,6 +80,12 @@ class TransactionsFragment : Fragment() {
             requireActivity().resources.getString(R.string.currency_balance),
             mViewModel.selectedAccount.currency, mViewModel.selectedAccount.current_balance
         )
+
+        if(mViewModel.transactionList.isEmpty())
+            tv_no_transactions.visibility = View.VISIBLE
+        else
+            tv_no_transactions.visibility = View.GONE
+
         transactionsAdapter.refresh()
     }
 
