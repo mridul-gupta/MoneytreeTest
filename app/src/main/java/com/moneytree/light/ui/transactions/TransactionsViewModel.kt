@@ -11,7 +11,9 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class TransactionsViewModel : ViewModel() {
+class TransactionsViewModel(
+    private val repository: Repository
+) : ViewModel() {
     private val TAG = TransactionsViewModel::class.java.simpleName
 
     var transactionByMonth: Map<String, List<Transaction>> = mapOf()
@@ -19,12 +21,6 @@ class TransactionsViewModel : ViewModel() {
     var selectedAccount: Account = Account(0, "", "", "", 0f, 0f)
 
     val responseStatus = MutableLiveData(Status.IDLE)
-
-    private var mRepository: Repository = Repository()
-
-    init {
-        this.mRepository = Repository()
-    }
 
     fun getCombinedDataForAdaptor(): MutableList<Comparable<*>> {
         val combineList: MutableList<Comparable<*>> = ArrayList()
@@ -40,45 +36,44 @@ class TransactionsViewModel : ViewModel() {
         return combineList
     }
 
-    fun getAccountData(accountNum: Int) {
+    fun getAccountData(accountNum: Int, force: Boolean) {
         responseStatus.value = Status.LOADING
 
         viewModelScope.launch {
-            mRepository.getAccountData(accountNum, object : FetchDataCallback<Transactions> {
-                override fun onFailure() {
-                    responseStatus.postValue(Status.ERROR)
-                }
+            val result = repository.getAccountData(accountNum, force)
+            if (result is Result.Success) {
+                Log.d(TAG, result.data.toString())
 
-                override fun onSuccess(data: Transactions) {
-                    Log.d(TAG, data.toString())
+                /* save as list */
+                transaction = result.data.transactions
+                /* sort by name, group by institution name */
+                transactionByMonth =
+                    result.data.transactions.sortedByDescending { transaction ->
+                        val sdf =
+                            SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX", Locale.getDefault())
 
-                    /* save as list */
-                    transaction = data.transactions
-                    /* sort by name, group by institution name */
-                    transactionByMonth =
-                        data.transactions.sortedByDescending { transaction ->
-                            val sdf =
-                                SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX", Locale.getDefault())
+                        /* sort by date */
+                        sdf.parse(transaction.date)
+                    }.groupBy { transaction ->
+                        val calendar = Calendar.getInstance()
+                        val sdf =
+                            SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX", Locale.getDefault())
+                        calendar.time = sdf.parse(transaction.date)!!
 
-                            /* sort by date */
-                            sdf.parse(transaction.date)
-                        }.groupBy { transaction ->
-                            val calendar = Calendar.getInstance()
-                            val sdf =
-                                SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX", Locale.getDefault())
-                            calendar.time = sdf.parse(transaction.date)!!
+                        val monthDate = SimpleDateFormat("MMMM", Locale.getDefault())
+                        val monthName = monthDate.format(calendar.time)
+                        val year = calendar.get(Calendar.YEAR)
 
-                            val monthDate = SimpleDateFormat("MMMM", Locale.getDefault())
-                            val monthName = monthDate.format(calendar.time)
-                            val year = calendar.get(Calendar.YEAR)
+                        /* group by month & year*/
+                        "$monthName $year"
+                    }
 
-                            /* group by month & year*/
-                            "$monthName $year"
-                        }
-
-                    responseStatus.postValue(Status.SUCCESS)
-                }
-            })
+                responseStatus.postValue(Status.SUCCESS)
+            } else {
+                responseStatus.postValue(Status.ERROR)
+                transaction = emptyList()
+                transactionByMonth = emptyMap()
+            }
         }
     }
 }

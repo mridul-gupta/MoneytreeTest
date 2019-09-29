@@ -7,12 +7,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.moneytree.light.Status
 import com.moneytree.light.data.Account
-import com.moneytree.light.data.Accounts
-import com.moneytree.light.data.FetchDataCallback
 import com.moneytree.light.data.Repository
+import com.moneytree.light.data.Result
 import kotlinx.coroutines.launch
 
-class DashboardViewModel : ViewModel() {
+class DashboardViewModel(
+    private val repository: Repository
+) : ViewModel() {
     private val TAG = DashboardViewModel::class.java.simpleName
 
     var accountsByInstitution: List<Pair<String, List<Account>>> = listOf()
@@ -23,36 +24,33 @@ class DashboardViewModel : ViewModel() {
     private val _openAccountDetailEvent = MutableLiveData<Account>()
     val openAccountDetailEvent: LiveData<Account> = _openAccountDetailEvent
 
-    private var mRepository: Repository = Repository()
 
     init {
-        this.mRepository = Repository()
-
         viewModelScope.launch {
-            getAccounts()
+            getAccounts(true)
         }
     }
 
-    private suspend fun getAccounts() {
+    private suspend fun getAccounts(force: Boolean) {
         responseStatus.value = Status.LOADING
 
         viewModelScope.launch {
-            mRepository.getAccounts(object : FetchDataCallback<Accounts> {
-                override fun onFailure() {
-                    responseStatus.postValue(Status.ERROR)
-                }
+            val result = repository.getAccounts(force)
 
-                override fun onSuccess(data: Accounts) {
-                    Log.d(TAG, data.toString())
+            if (result is Result.Success) {
+                Log.d(TAG, result.data.toString())
 
-                    /* save as list */
-                    accounts = data.accounts
-                    /* sort by name, group by institution name */
-                    accountsByInstitution =
-                        data.accounts.sortedBy { it.name }.groupBy { it.institution }.toList()
-                    responseStatus.postValue(Status.SUCCESS)
-                }
-            })
+                /* save as list */
+                accounts = result.data.accounts
+                /* sort by name, group by institution name */
+                accountsByInstitution =
+                    result.data.accounts.sortedBy { it.name }.groupBy { it.institution }.toList()
+                responseStatus.postValue(Status.SUCCESS)
+            } else {
+                responseStatus.postValue(Status.ERROR)
+                accounts = emptyList()
+                accountsByInstitution = emptyList()
+            }
         }
     }
 

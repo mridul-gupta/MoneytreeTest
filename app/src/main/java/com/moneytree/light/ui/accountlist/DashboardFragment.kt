@@ -10,12 +10,12 @@ import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.moneytree.light.ACCOUNT_TRANSACTIONS_SCREEN
 import com.moneytree.light.R
 import com.moneytree.light.Status
+import com.moneytree.light.obtainViewModel
 import com.moneytree.light.ui.AccountsActivity
 import kotlinx.android.synthetic.main.dashboard_fragment.*
 import kotlinx.android.synthetic.main.simple_toolbar.view.*
@@ -43,7 +43,7 @@ class DashboardFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        mViewModel = ViewModelProviders.of(this).get(DashboardViewModel::class.java)
+        mViewModel = obtainViewModel(DashboardViewModel::class.java)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

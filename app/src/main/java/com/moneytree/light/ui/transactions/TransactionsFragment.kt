@@ -10,12 +10,12 @@ import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.moneytree.light.ACCOUNT_DASHBOARD_SCREEN
 import com.moneytree.light.R
 import com.moneytree.light.Status
+import com.moneytree.light.obtainViewModel
 import com.moneytree.light.ui.AccountsActivity
 import kotlinx.android.synthetic.main.simple_toolbar.view.*
 import kotlinx.android.synthetic.main.transactions_fragment.*
@@ -46,10 +46,10 @@ class TransactionsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val view =  inflater.inflate(R.layout.transactions_fragment, container, false)
-        mViewModel = ViewModelProviders.of(this).get(TransactionsViewModel::class.java)
+        mViewModel = obtainViewModel(TransactionsViewModel::class.java)
 
         mViewModel.selectedAccount = arguments?.getParcelable("ACCOUNT")!!
-        mViewModel.getAccountData(mViewModel.selectedAccount.id)
+        mViewModel.getAccountData(mViewModel.selectedAccount.id, false)
 
         mViewModel.responseStatus.observe(
             this,

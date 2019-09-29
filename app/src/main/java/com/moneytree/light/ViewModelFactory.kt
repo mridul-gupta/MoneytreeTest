@@ -3,36 +3,25 @@ package com.moneytree.light
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.moneytree.light.data.Repository
 import com.moneytree.light.ui.accountlist.DashboardViewModel
 import com.moneytree.light.ui.transactions.TransactionsViewModel
 
-class ViewModelFactory private constructor() : ViewModelProvider.Factory {
+class ViewModelFactory constructor(
+    private val repository: Repository
+) : ViewModelProvider.NewInstanceFactory() {
 
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(DashboardViewModel::class.java)) {
-            return DashboardViewModel() as T
-        } else if (modelClass.isAssignableFrom(TransactionsViewModel::class.java)) {
-            return TransactionsViewModel() as T
-        }
-        throw IllegalArgumentException("Unknown class name")
-    }
-
-    companion object {
-        @Volatile
-        private var INSTANCE: ViewModelFactory? = null
-
-        fun getInstance(): ViewModelFactory? {
-
-            if (INSTANCE == null) {
-                synchronized(ViewModelFactory::class.java) {
-                    if (INSTANCE == null) {
-                        INSTANCE =
-                            ViewModelFactory()
-                    }
-                }
+        return with(modelClass) {
+            when {
+                isAssignableFrom(DashboardViewModel::class.java) ->
+                    DashboardViewModel(repository)
+                isAssignableFrom(TransactionsViewModel::class.java) ->
+                    TransactionsViewModel(repository)
+                else ->
+                    throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
             }
-            return INSTANCE
-        }
+        } as T
     }
 }
