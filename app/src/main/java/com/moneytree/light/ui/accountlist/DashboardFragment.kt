@@ -25,10 +25,6 @@ class DashboardFragment : Fragment() {
     private lateinit var dashboardRecyclerView: RecyclerView
     private lateinit var dashboardAdapter: DashboardAdapter
 
-    companion object {
-        fun newInstance() = DashboardFragment()
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -71,7 +67,7 @@ class DashboardFragment : Fragment() {
         val tbToolbar: Toolbar = toolbar as Toolbar
         tbToolbar.iv_add_account.visibility = View.VISIBLE
         tbToolbar.iv_profile.visibility = View.VISIBLE
-        tbToolbar.toolbar_name.text = "Hey, Mike"
+        tbToolbar.toolbar_name.text = getString(R.string.user_greeting)
 
         tbToolbar.iv_add_account.setOnClickListener {
             Toast.makeText(activity, "Coming Soon", Toast.LENGTH_SHORT).show()

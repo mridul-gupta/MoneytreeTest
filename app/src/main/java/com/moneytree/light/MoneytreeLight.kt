@@ -6,8 +6,7 @@ import com.moneytree.light.data.Repository
 
 class MoneytreeLight : Application() {
 
-    private lateinit var mContext: MoneytreeLight
-    val repository: Repository = ServiceLocator.provideAccountsRepository(this)
+    val repository: Repository = ServiceLocator.provideAccountsRepository()
 
     override fun onCreate() {
         super.onCreate()

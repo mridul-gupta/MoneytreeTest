@@ -3,11 +3,6 @@ package com.moneytree.light.data
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
-data class ApiResponse<T>(
-    var statusCode: Int,
-    var message: String,
-    var result: T? = null
-)
 
 data class Transaction(
     var account_id: Int,

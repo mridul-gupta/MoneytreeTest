@@ -116,7 +116,6 @@ class DefaultRepositoryTest {
         Transactions(
             listOf()
         )
-    private var TRANSACTIONS_SERVICE_DATA: HashMap<Int, Transactions> = HashMap()
 
 
     private val remoteAccounts: Accounts = ACCOUNTS_SERVICE_DATA
@@ -127,8 +126,6 @@ class DefaultRepositoryTest {
         hashMapOf(1 to transactions_1, 2 to transactions_2, 3 to transactions_3)
     private val localTransactions: HashMap<Int, Transactions> =
         hashMapOf(1 to transactions_1)
-    private val newTransactions: HashMap<Int, Transactions> =
-        hashMapOf()
 
     private lateinit var remoteDataSource: FakeDataSource
     private lateinit var localDataSource: FakeDataSource

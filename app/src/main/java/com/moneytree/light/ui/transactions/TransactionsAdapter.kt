@@ -12,7 +12,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class TransactionsAdapter(
-    var context: Context,
+    private var context: Context,
     private val combinedList: MutableList<Comparable<*>>,
     private var mViewModel: TransactionsViewModel
 ) : RecyclerView.Adapter<TransactionsAdapter.BaseViewHolder<*>>() {
@@ -30,7 +30,7 @@ class TransactionsAdapter(
             TYPE_HEADER -> {
                 val view =
                     LayoutInflater.from(context).inflate(R.layout.transaction_header, parent, false)
-                HeaderViewHolder(view, context)
+                HeaderViewHolder(view)
             }
             TYPE_TRANSACTION -> {
                 val view =
@@ -76,7 +76,7 @@ class TransactionsAdapter(
         abstract fun bind(item: T)
     }
 
-    class HeaderViewHolder(private val view: View, private val context: Context) :
+    class HeaderViewHolder(private val view: View) :
         BaseViewHolder<String>(view) {
 
         override fun bind(item: String) {

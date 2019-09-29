@@ -7,6 +7,7 @@ import com.moneytree.light.data.Repository
 import com.moneytree.light.ui.accountlist.DashboardViewModel
 import com.moneytree.light.ui.transactions.TransactionsViewModel
 
+@Suppress("UNCHECKED_CAST")
 class ViewModelFactory constructor(
     private val repository: Repository
 ) : ViewModelProvider.NewInstanceFactory() {

@@ -1,6 +1,5 @@
 package com.moneytree.light.ui
 
-import androidx.test.core.app.ApplicationProvider
 import androidx.test.filters.LargeTest
 import com.moneytree.light.ServiceLocator
 import com.moneytree.light.data.Repository
@@ -15,7 +14,7 @@ class AccountsActivityTest {
     @Before
     fun init() {
         repository =
-            ServiceLocator.provideAccountsRepository(ApplicationProvider.getApplicationContext())
+            ServiceLocator.provideAccountsRepository()
     }
 
     @After

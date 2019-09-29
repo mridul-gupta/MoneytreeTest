@@ -141,20 +141,16 @@ class DefaultRepository(
 
     private fun getTransactionsForAccount(id: Int) = cachedTransactions?.get(id)
 
-    private suspend fun refreshLocalDataSource(transactions: Transactions) {
+    private fun refreshLocalDataSource(transactions: Transactions) {
         //ToDo: refresh local data
     }
 
-    private suspend fun refreshLocalDataSource(accounts: Accounts) {
+    private fun refreshLocalDataSource(accounts: Accounts) {
         //ToDo: refresh local data
     }
 
     private fun refreshCache(accounts: Accounts) {
         cachedAccounts = accounts
-    }
-
-    private fun refreshCache(transactions: Transactions) {
-        //ToDo: cache management
     }
 
     private fun cacheTransactions(

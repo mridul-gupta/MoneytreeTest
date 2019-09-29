@@ -27,9 +27,7 @@ class TransactionsFragment : Fragment() {
     private lateinit var transactionsAdapter: TransactionsAdapter
 
 
-    companion object {
-        fun newInstance() = TransactionsFragment()
-    }
+    companion object;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

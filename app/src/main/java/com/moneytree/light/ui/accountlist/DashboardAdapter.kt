@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.account_row.view.*
 import kotlinx.android.synthetic.main.institution_card.view.*
 
 class DashboardAdapter(
-    var context: Context,
+    private var context: Context,
     private var accountsByInstitution: List<Pair<String, List<Account>>>,
     private val dashboardViewModel: DashboardViewModel
 ) : RecyclerView.Adapter<DashboardAdapter.InstitutionViewHolder>() {

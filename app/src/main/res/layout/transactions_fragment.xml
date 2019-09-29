@@ -99,7 +99,7 @@
             android:id="@+id/tv_no_transactions"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="No Transactions found"
+            android:text="@string/no_transactions_found"
             android:visibility="gone"
             android:layout_gravity="center" />
 

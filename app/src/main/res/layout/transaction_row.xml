@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
     android:paddingTop="16dp"
     android:paddingBottom="4dp"
     android:paddingStart="24dp"
@@ -32,7 +31,8 @@
         app:layout_constraintEnd_toStartOf="@+id/tv_transaction_info"
         app:layout_constraintWidth_percent=".15"
         app:layout_constraintStart_toEndOf="@+id/tv_month_title"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/expense_category" />
 
     <TextView
         android:id="@+id/tv_transaction_info"

@@ -4,4 +4,9 @@
     <string name="currency_balance">%1$s %2$,.1f</string>
     <string name="user_profile_button">User Profile button</string>
     <string name="default_currency">JPY</string>
+    <string name="expense_category">Expense Category</string>
+    <string name="total_balances">Total Balances</string>
+    <string name="no_account_found">No Account found</string>
+    <string name="no_transactions_found">No Transactions found</string>
+    <string name="user_greeting">Hey, Mike</string>
 </resources>

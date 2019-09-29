@@ -1,6 +1,5 @@
 package com.moneytree.light
 
-import android.content.Context
 import androidx.annotation.VisibleForTesting
 import com.moneytree.light.data.DefaultRepository
 import com.moneytree.light.data.FakeRemoteDataSource
@@ -18,7 +17,7 @@ object ServiceLocator {
     var repository: Repository? = null
         @VisibleForTesting set
 
-    fun provideAccountsRepository(context: Context): Repository {
+    fun provideAccountsRepository(): Repository {
         synchronized(this) {
             return repository ?: repository ?: createAccountsRepository()
         }
