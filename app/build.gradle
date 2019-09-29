@@ -21,6 +21,17 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    android {
+        sourceSets {
+            String sharedTestDir = 'src/sharedTest/java'
+            test {
+                java.srcDir sharedTestDir
+            }
+            androidTest {
+                java.srcDir sharedTestDir
+            }
+        }
+    }
 
     /* add flavours */
     flavorDimensions "default"
@@ -44,6 +55,7 @@ android {
 
     /* Always show the result of every unit test, even if it passes. */
     testOptions.unitTests {
+        returnDefaultValues = true
         includeAndroidResources = true
 
         all {
@@ -69,8 +81,14 @@ dependencies {
 
 
     /* test */
+    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.2.1'
+    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.2.1'
     implementation 'androidx.test.espresso:espresso-idling-resource:3.2.0'
     testImplementation 'junit:junit:4.12'
+    testImplementation 'com.google.truth:truth:0.44'
+    testImplementation 'androidx.arch.core:core-testing:2.1.0'
+
+    /* androidTest */
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'

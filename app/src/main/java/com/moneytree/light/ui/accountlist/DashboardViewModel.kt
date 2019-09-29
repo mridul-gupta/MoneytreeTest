@@ -31,7 +31,7 @@ class DashboardViewModel(
         }
     }
 
-    private suspend fun getAccounts(force: Boolean) {
+    fun getAccounts(force: Boolean) {
         responseStatus.value = Status.LOADING
 
         viewModelScope.launch {

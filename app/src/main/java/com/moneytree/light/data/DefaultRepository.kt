@@ -66,9 +66,9 @@ class DefaultRepository(
 
         // Don't read from local if it's forced
         //ToDo: in case of force, don't go to local
-        // if (force) {
-        //    return Result.Error(Exception("Can't force refresh: remote-data-source didn't work"))
-        //}
+        if (force) {
+            return Result.Error(Exception("Can't force refresh: remote-data-source didn't work"))
+        }
 
         // Local if remote fails
         val localAccounts = localDataSource.getAccounts(force)
@@ -127,9 +127,9 @@ class DefaultRepository(
 
         // Don't read from local if it's forced
         //ToDo: in case of force, don't go to local
-        // if (force) {
-        //    return Result.Error(Exception("Can't force refresh: remote-data-source didn't work"))
-        //}
+        if (force) {
+            return Result.Error(Exception("Can't force refresh: remote-data-source didn't work"))
+        }
 
         // Local if remote fails
         val localTransactions = localDataSource.getAccountData(accountNum, force)
@@ -150,7 +150,7 @@ class DefaultRepository(
     }
 
     private fun refreshCache(accounts: Accounts) {
-        //ToDo: cache management
+        cachedAccounts = accounts
     }
 
     private fun refreshCache(transactions: Transactions) {
