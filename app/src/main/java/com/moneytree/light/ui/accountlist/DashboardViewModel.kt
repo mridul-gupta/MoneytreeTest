@@ -27,7 +27,7 @@ class DashboardViewModel(
 
     init {
         viewModelScope.launch {
-            getAccounts(true)
+            getAccounts(false)
         }
     }
 
