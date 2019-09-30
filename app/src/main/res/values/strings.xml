@@ -2,7 +2,8 @@
     <string name="app_name">Moneytree Light</string>
     <string name="transactions_file_name">transactions_%1$d.json</string>
     <string name="currency_balance">%1$s %2$,.1f</string>
-    <string name="user_profile_button">User Profile button</string>
+    <string name="user_profile_button">User Profile</string>
+    <string name="add_account_button">Add Account</string>
     <string name="default_currency">JPY</string>
     <string name="expense_category">Expense Category</string>
     <string name="total_balances">Total Balances</string>
